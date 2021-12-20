@@ -31,7 +31,24 @@ function sendMessage(msg) {
    bot.sendMessage(chatId, msg);
 }
 
+function interval() {
+   const timer = setInterval(() => {
+      let today = new Date();
+      let month = today.getMonth() + 1; // 월
+      let date = today.getDate(); // 날짜
+      let hours = today.getHours(); // 시
+      let minutes = today.getMinutes(); // 분
+      let seconds = today.getSeconds(); // 초
+
+      var now = month + '/' + date + '  ' + hours + ':' + minutes + ':' + seconds;
+      console.log('실행 :  ' + now);
+
+      sendMessage(now + '🥰');
+   }, 30000);
+}
+
 module.exports = {
    start: start,
    sendMessage: sendMessage,
+   interval: interval,
 };
