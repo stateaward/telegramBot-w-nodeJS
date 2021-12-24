@@ -26,7 +26,6 @@ var server = http.createServer(app);
  * telegramBot start
  */
 telegramBot.start();
-telegramBot.interval();
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -18,6 +18,20 @@ function start() {
       bot.sendMessage(chatId, resp);
    });
 
+   bot.onText(/\/start/, (msg) => {
+      const chatId = msg.chat.id;
+      goInterval();
+
+      bot.sendMessage(chatId, '인터벌을 실행합니다.');
+   });
+
+   bot.onText(/\/stop/, (msg) => {
+      const chatId = msg.chat.id;
+      stopInterval();
+
+      bot.sendMessage(chatId, '인터벌을 정지합니다.');
+   });
+
    // .on('message')을 통해 bot이 어떤 메세지든 수신하도록 해줌
    bot.on('message', (msg) => {
       const chatId = msg.chat.id;
@@ -31,8 +45,10 @@ function sendMessage(msg) {
    bot.sendMessage(chatId, msg);
 }
 
-function interval() {
-   const timer = setInterval(() => {
+var isStop = false;
+
+var interval = setInterval(() => {
+   if (!isStop) {
       let today = new Date();
       let month = today.getMonth() + 1; // 월
       let date = today.getDate(); // 날짜
@@ -44,7 +60,18 @@ function interval() {
       console.log('실행 :  ' + now);
 
       sendMessage(now + '🥰');
-   }, 30000);
+   } else {
+      console.log('정지');
+      clearInterval(interval);
+   }
+}, 30000);
+
+function goInterval() {
+   isStop = false;
+}
+
+function stopInterval() {
+   isStop = true;
 }
 
 module.exports = {
